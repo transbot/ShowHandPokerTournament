@@ -151,21 +151,21 @@ export const Game: React.FC = () => {
     let result = '';
     
     if (comparison > 0) {
-      result = getTranslation('playerWins', language);
+      result = 'playerWins';
       setStats(prev => ({
         ...prev,
         totalGames: prev.totalGames + 1,
         playerWins: prev.playerWins + 1
       }));
     } else if (comparison < 0) {
-      result = getTranslation('dealerWins', language);
+      result = 'dealerWins';
       setStats(prev => ({
         ...prev,
         totalGames: prev.totalGames + 1,
         dealerWins: prev.dealerWins + 1
       }));
     } else {
-      result = getTranslation('tie', language);
+      result = 'tie';
       setStats(prev => ({
         ...prev,
         totalGames: prev.totalGames + 1,
@@ -291,7 +291,7 @@ export const Game: React.FC = () => {
             {gamePhase === 'game-over' && (
               <div className="space-y-2">
                 <div className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                  {getTranslation('result', language)}: <span className={isDarkMode ? 'text-blue-400' : 'text-blue-600'}>{gameResult}</span>
+                  {getTranslation('result', language)}: <span className={isDarkMode ? 'text-blue-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
                 </div>
                 <div className={`text-sm sm:text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   {getTranslation('dealerReplaced', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
