@@ -426,7 +426,7 @@ export const Game: React.FC = () => {
                       : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
                   }`}
                 >
-                  <span>{soundEnabled ? '🔊' : '🔇'}</span>
+                  <span className="text-xs">{soundEnabled ? '🔊' : '🔇'}</span>
                   {soundEnabled ? (language === 'zh' ? '音效开' : 'Sound On') : (language === 'zh' ? '音效关' : 'Sound Off')}
                 </button>
               </div>
