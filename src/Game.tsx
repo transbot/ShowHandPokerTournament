@@ -6,6 +6,7 @@ import { Hand } from './components/Hand';
 import { GameStats as GameStatsComponent } from './components/GameStats';
 import { getTranslation } from './translations';
 import { Globe, Play, RotateCcw, Sun, Moon, RefreshCw } from 'lucide-react';
+import { useSound } from './hooks/useSound';
 
 type GamePhase = 'dealing' | 'player-replace' | 'dealer-replace' | 'revealing' | 'game-over';
 
@@ -23,6 +24,7 @@ export const Game: React.FC = () => {
     return browserLang.startsWith('zh') ? 'zh' : 'en';
   };
   
+  const { playSound, toggleSound, isSoundEnabled } = useSound();
   const [language, setLanguage] = useState<Language>(getSystemLanguage());
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [deck, setDeck] = useState<Card[]>([]);
@@ -50,6 +52,9 @@ export const Game: React.FC = () => {
 
   // 开始新游戏
   const startNewGame = () => {
+    // 播放洗牌音效
+    playSound('shuffle');
+    
     // 重置动画状态
     setAnimationState({
       isDealing: false,
@@ -109,6 +114,8 @@ export const Game: React.FC = () => {
         setPlayerHand(prev => {
           const newHand = [...prev];
           newHand[playerCardIndex] = finalPlayerHand[playerCardIndex];
+          // 播放发牌音效
+          playSound('deal');
           return newHand;
         });
       } else {
@@ -117,6 +124,8 @@ export const Game: React.FC = () => {
         setDealerHand(prev => {
           const newHand = [...prev];
           newHand[dealerCardIndex] = finalDealerHand[dealerCardIndex];
+          // 播放发牌音效
+          playSound('deal');
           return newHand;
         });
       }
@@ -193,6 +202,9 @@ export const Game: React.FC = () => {
       setPlayerHand([...newPlayerHand]);
       setDeck([...newDeck]);
       
+      // 播放换牌音效
+      playSound('replace');
+      
       replaceIndex++;
       setTimeout(replaceNextCard, 400);
     };
@@ -246,6 +258,9 @@ export const Game: React.FC = () => {
       setDealerHand([...newDealerHand]);
       setDeck([...newDeck]);
       
+      // 播放换牌音效
+      playSound('replace');
+      
       replaceIndex++;
       setTimeout(replaceNextCard, 500);
     };
@@ -269,6 +284,8 @@ export const Game: React.FC = () => {
     
     if (comparison > 0) {
       result = 'playerWins';
+      // 播放胜利音效
+      setTimeout(() => playSound('win'), 500);
       setStats(prev => ({
         ...prev,
         totalGames: prev.totalGames + 1,
@@ -276,6 +293,8 @@ export const Game: React.FC = () => {
       }));
     } else if (comparison < 0) {
       result = 'dealerWins';
+      // 播放失败音效
+      setTimeout(() => playSound('lose'), 500);
       setStats(prev => ({
         ...prev,
         totalGames: prev.totalGames + 1,
@@ -283,6 +302,8 @@ export const Game: React.FC = () => {
       }));
     } else {
       result = 'tie';
+      // 播放平局音效
+      setTimeout(() => playSound('tie'), 500);
       setStats(prev => ({
         ...prev,
         totalGames: prev.totalGames + 1,
@@ -305,6 +326,14 @@ export const Game: React.FC = () => {
 
   const toggleTheme = () => {
     setIsDarkMode(prev => !prev);
+  };
+  
+  const handleToggleSound = () => {
+    const newState = toggleSound();
+    // 播放测试音效来确认状态
+    if (newState) {
+      playSound('deal');
+    }
   };
 
   return (
@@ -342,6 +371,18 @@ export const Game: React.FC = () => {
                 <Globe size={14} />
                 {language === 'zh' ? '中文' : 'English'}
               </button>
+              
+              <button
+                onClick={handleToggleSound}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
+                  isSoundEnabled()
+                    ? (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-600 text-white hover:bg-green-700')
+                    : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
+                }`}
+              >
+                <span className="text-xs">🔊</span>
+                {isSoundEnabled() ? (language === 'zh' ? '音效' : 'Sound') : (language === 'zh' ? '静音' : 'Mute')}
+              </button>
             </div>
             
             {/* 大屏端：按钮在标题两侧 */}
@@ -362,17 +403,31 @@ export const Game: React.FC = () => {
                 {getTranslation('title', language)}
               </h1>
               
-              <button
-                onClick={toggleLanguage}
-                className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
-                  isDarkMode
-                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                <Globe size={16} />
-                {language === 'zh' ? '中文' : 'English'}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={toggleLanguage}
+                  className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
+                    isDarkMode
+                      ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  <Globe size={16} />
+                  {language === 'zh' ? '中文' : 'English'}
+                </button>
+                
+                <button
+                  onClick={handleToggleSound}
+                  className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
+                    isSoundEnabled()
+                      ? (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-600 text-white hover:bg-green-700')
+                      : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
+                  }`}
+                >
+                  <span>🔊</span>
+                  {isSoundEnabled() ? (language === 'zh' ? '音效' : 'Sound') : (language === 'zh' ? '静音' : 'Mute')}
+                </button>
+              </div>
             </div>
             
             {/* 手机端标题 */}
