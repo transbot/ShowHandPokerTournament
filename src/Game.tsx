@@ -293,7 +293,73 @@ export const Game: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         {/* 头部 */}
         <div className="text-center mb-4 sm:mb-8">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-4">
+          <div className="flex flex-col items-center justify-center gap-2 sm:gap-4 mb-4">
+            {/* 手机端：按钮在标题上方并列 */}
+            <div className="flex items-center gap-2 sm:hidden">
+              <button
+                onClick={toggleTheme}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
+                  isDarkMode
+                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
+                {isDarkMode ? (language === 'zh' ? '明亮' : 'Light') : (language === 'zh' ? '深色' : 'Dark')}
+              </button>
+              
+              <button
+                onClick={toggleLanguage}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
+                  isDarkMode
+                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <Globe size={14} />
+                {language === 'zh' ? '中文' : 'English'}
+              </button>
+            </div>
+            
+            {/* 大屏端：按钮在标题两侧 */}
+            <div className="hidden sm:flex sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={toggleTheme}
+                className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
+                  isDarkMode
+                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+                {isDarkMode ? (language === 'zh' ? '明亮' : 'Light') : (language === 'zh' ? '深色' : 'Dark')}
+              </button>
+              
+              <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+                {getTranslation('title', language)}
+              </h1>
+              
+              <button
+                onClick={toggleLanguage}
+                className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
+                  isDarkMode
+                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <Globe size={16} />
+                {language === 'zh' ? '中文' : 'English'}
+              </button>
+            </div>
+            
+            {/* 手机端标题 */}
+            <h1 className={`text-xl font-bold sm:hidden ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              {getTranslation('title', language)}
+            </h1>
+          </div>
+          
+          {/* 移除原来的按钮和标题代码 */}
+          <div className="hidden">
             <button
               onClick={toggleTheme}
               className={`flex items-center gap-2 px-3 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium ${
@@ -322,7 +388,6 @@ export const Game: React.FC = () => {
               {language === 'zh' ? '中文' : 'English'}
             </button>
           </div>
-          
           {/* 重置游戏按钮 */}
           <div className="mb-2 sm:mb-4">
             <button
