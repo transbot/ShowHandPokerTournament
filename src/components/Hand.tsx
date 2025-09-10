@@ -46,7 +46,7 @@ export const Hand: React.FC<HandProps> = ({
               ${isDealing ? 'animate-bounce' : ''}
               ${animatingCards.includes(index) ? 'animate-pulse scale-110' : ''}
               transition-all duration-300
-            `}
+            isDealing={animationState.isDealing && animationState.dealingIndex % 2 === 0}
           />
         ))}
       </div>

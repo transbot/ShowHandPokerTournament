@@ -90,7 +90,7 @@ export const Game: React.FC = () => {
       
       setAnimationState(prev => ({ ...prev, dealingIndex: index }));
       
-      if (index < 5) {
+      if (index % 2 === 0) {
         // 发给玩家
         setPlayerHand(prev => [...prev, newDeck[index]]);
       } else {
