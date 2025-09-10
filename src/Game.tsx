@@ -355,19 +355,19 @@ export const Game: React.FC = () => {
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
                   isDarkMode
                     ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                    : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
                 }`}
               >
-                {isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
-                {isDarkMode ? (language === 'zh' ? '明亮' : 'Light') : (language === 'zh' ? '深色' : 'Dark')}
+                {isDarkMode ? <Moon size={14} /> : <Sun size={14} />}
+                {isDarkMode ? (language === 'zh' ? '深色' : 'Dark') : (language === 'zh' ? '浅色' : 'Light')}
               </button>
               
               <button
                 onClick={toggleLanguage}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
-                  isDarkMode
-                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                  language === 'zh'
+                    ? (isDarkMode ? 'bg-blue-700 text-blue-200 hover:bg-blue-600' : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
+                    : (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-100 text-green-800 hover:bg-green-200')
                 }`}
               >
                 <Globe size={14} />
@@ -382,8 +382,8 @@ export const Game: React.FC = () => {
                     : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
                 }`}
               >
-                <span className="text-xs">🔊</span>
-                {isSoundEnabled() ? (language === 'zh' ? '音效' : 'Sound') : (language === 'zh' ? '静音' : 'Mute')}
+                <span className="text-xs">{soundEnabled ? '🔊' : '🔇'}</span>
+                {soundEnabled ? (language === 'zh' ? '音效开' : 'Sound On') : (language === 'zh' ? '音效关' : 'Sound Off')}
               </button>
             </div>
             
@@ -394,11 +394,11 @@ export const Game: React.FC = () => {
                 className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
                   isDarkMode
                     ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                    : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
                 }`}
               >
-                {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
-                {isDarkMode ? (language === 'zh' ? '明亮' : 'Light') : (language === 'zh' ? '深色' : 'Dark')}
+                {isDarkMode ? <Moon size={16} /> : <Sun size={16} />}
+                {isDarkMode ? (language === 'zh' ? '深色' : 'Dark') : (language === 'zh' ? '浅色' : 'Light')}
               </button>
               
               <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
@@ -409,9 +409,9 @@ export const Game: React.FC = () => {
                 <button
                   onClick={toggleLanguage}
                   className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
-                    isDarkMode
-                      ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                    language === 'zh'
+                      ? (isDarkMode ? 'bg-blue-700 text-blue-200 hover:bg-blue-600' : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
+                      : (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-100 text-green-800 hover:bg-green-200')
                   }`}
                 >
                   <Globe size={16} />
@@ -426,8 +426,8 @@ export const Game: React.FC = () => {
                       : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
                   }`}
                 >
-                  <span>🔊</span>
-                  {soundEnabled ? (language === 'zh' ? '音效' : 'Sound') : (language === 'zh' ? '静音' : 'Mute')}
+                  <span>{soundEnabled ? '🔊' : '🔇'}</span>
+                  {soundEnabled ? (language === 'zh' ? '音效开' : 'Sound On') : (language === 'zh' ? '音效关' : 'Sound Off')}
                 </button>
               </div>
             </div>
