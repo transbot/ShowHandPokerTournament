@@ -27,7 +27,7 @@ export const Game: React.FC = () => {
   const { playSound, toggleSound, isSoundEnabled } = useSound();
   const [language, setLanguage] = useState<Language>(getSystemLanguage());
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(isSoundEnabled());
   const [deck, setDeck] = useState<Card[]>([]);
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
   const [dealerHand, setDealerHand] = useState<Card[]>([]);
@@ -331,9 +331,9 @@ export const Game: React.FC = () => {
   
   const handleToggleSound = () => {
     toggleSound();
-    setSoundEnabled(isSoundEnabled());
+    setSoundEnabled(!soundEnabled);
     // 播放测试音效来确认状态
-    if (isSoundEnabled()) {
+    if (!soundEnabled) {
       playSound('deal');
     }
   };

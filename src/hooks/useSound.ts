@@ -39,7 +39,11 @@ const SOUND_CONFIG = {
 
 export const useSound = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
-  const [isEnabled, setIsEnabled] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(() => {
+    // 从localStorage读取音效设置，默认开启
+    const saved = localStorage.getItem('soundEnabled');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
   // 初始化音频上下文
   const initAudioContext = useCallback(() => {
@@ -119,7 +123,12 @@ export const useSound = () => {
 
   // 切换音效开关
   const toggleSound = useCallback(() => {
-    setIsEnabled(prev => !prev);
+    setIsEnabled(prev => {
+      const newValue = !prev;
+      // 保存到localStorage
+      localStorage.setItem('soundEnabled', JSON.stringify(newValue));
+      return newValue;
+    });
   }, []);
 
   // 获取音效状态
