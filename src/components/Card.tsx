@@ -102,6 +102,7 @@ const getFaceCardPattern = (rank: string, suit: string): JSX.Element | null => {
   
   return null;
 };
+
 export const Card: React.FC<CardProps> = ({ 
   card, 
   isSelected = false, 
@@ -125,6 +126,7 @@ export const Card: React.FC<CardProps> = ({
   };
 
   const isFaceCard = card.rank === 'J' || card.rank === 'Q' || card.rank === 'K';
+  
   if (isHidden) {
     return (
       <div className={`w-12 h-18 sm:w-16 sm:h-24 border-2 rounded-lg flex items-center justify-center ${
@@ -178,7 +180,7 @@ export const Card: React.FC<CardProps> = ({
       )}
       
       <div className={`text-xs sm:text-xs font-bold ${getSuitColor(card.suit)} leading-none self-end transform rotate-180 z-10 relative`}>
-    <div className={`text-xs sm:text-xs font-bold ${getSuitColor(card.suit)} leading-none transform rotate-180 absolute bottom-1 right-1 z-10`}>
+        <div>{card.rank}</div>
         <div>{getSuitSymbol(card.suit)}</div>
       </div>
     </div>
