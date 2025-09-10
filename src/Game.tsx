@@ -266,12 +266,17 @@ export const Game: React.FC = () => {
           {/* 游戏状态显示 */}
           <div className="text-center py-2 sm:py-4">
             {gamePhase === 'player-replace' && (
-              <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-                {getTranslation('selectCardsToReplace', language)}
+              <div className="space-y-2">
+                <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                  {selectedCards.length > 0 
+                    ? getTranslation('replaceHint', language)
+                    : getTranslation('continueHint', language)
+                  }
+                </div>
                 {selectedCards.length > 0 && (
-                  <span className="ml-2 text-xs sm:text-sm">
-                    ({getTranslation('selectedCards', language)}: {selectedCards.length}/3)
-                  </span>
+                  <div className={`text-xs sm:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                    {getTranslation('selectedCards', language)}: {selectedCards.length}/3
+                  </div>
                 )}
               </div>
             )}
@@ -347,19 +352,28 @@ export const Game: React.FC = () => {
         </div>
 
         {/* 游戏说明 */}
-        <div className={`text-center text-xs sm:text-sm px-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-          <p className="mb-1 sm:mb-2">
-            {language === 'zh' 
-              ? '点击牌面选择要换的牌（最多3张），然后点击换牌按钮' 
-              : 'Click cards to select for replacement (max 3), then click replace button'
-            }
-          </p>
-          <p className="text-xs sm:text-sm">
-            {language === 'zh' 
-              ? '牌型从大到小：同花顺 > 四条 > 葫芦 > 同花 > 顺子 > 三条 > 两对 > 一对 > 散牌' 
-              : 'Hand rankings: Straight Flush > Four of a Kind > Full House > Flush > Straight > Three of a Kind > Two Pairs > One Pair > High Card'
-            }
-          </p>
+        <div className={`rounded-lg p-4 sm:p-6 mb-4 ${
+          isDarkMode ? 'bg-gray-800 border border-gray-700' : 'bg-gray-50 border border-gray-200'
+        }`}>
+          <h3 className={`text-base sm:text-lg font-bold mb-3 text-center ${
+            isDarkMode ? 'text-yellow-400' : 'text-orange-600'
+          }`}>
+            📋 {getTranslation('gameRules', language)}
+          </h3>
+          <div className={`text-xs sm:text-sm space-y-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            <p className="text-center font-medium">
+              {language === 'zh' 
+                ? '🎯 操作说明：点击牌面选择要换的牌（最多3张），然后点击换牌按钮开始对战' 
+                : '🎯 How to play: Click cards to select for replacement (max 3), then click replace button to start'
+              }
+            </p>
+            <p className="text-center">
+              {language === 'zh' 
+                ? '🏆 牌型从大到小：同花顺 > 四条 > 葫芦 > 同花 > 顺子 > 三条 > 两对 > 一对 > 散牌' 
+                : '🏆 Hand rankings: Straight Flush > Four of a Kind > Full House > Flush > Straight > Three of a Kind > Two Pairs > One Pair > High Card'
+              }
+            </p>
+          </div>
         </div>
       </div>
     </div>
