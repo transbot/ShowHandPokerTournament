@@ -9,6 +9,13 @@ import { Globe, Play, RotateCcw, Sun, Moon, RefreshCw } from 'lucide-react';
 
 type GamePhase = 'dealing' | 'player-replace' | 'dealer-replace' | 'revealing' | 'game-over';
 
+interface AnimationState {
+  isDealing: boolean;
+  dealingIndex: number;
+  isPlayerReplacing: boolean;
+  isDealerReplacing: boolean;
+  replacingCards: number[];
+}
 export const Game: React.FC = () => {
   // 根据用户系统环境自动设置语言
   const getSystemLanguage = (): Language => {
@@ -33,22 +40,69 @@ export const Game: React.FC = () => {
   const [playerEvaluation, setPlayerEvaluation] = useState<HandEvaluation | null>(null);
   const [dealerEvaluation, setDealerEvaluation] = useState<HandEvaluation | null>(null);
   const [dealerReplacedCount, setDealerReplacedCount] = useState<number>(0);
+  const [animationState, setAnimationState] = useState<AnimationState>({
+    isDealing: false,
+    dealingIndex: 0,
+    isPlayerReplacing: false,
+    isDealerReplacing: false,
+    replacingCards: []
+  });
 
   // 开始新游戏
   const startNewGame = () => {
-    const newDeck = shuffleDeck(createDeck());
-    const newPlayerHand = newDeck.slice(0, 5);
-    const newDealerHand = newDeck.slice(5, 10);
+    // 重置动画状态
+    setAnimationState({
+      isDealing: false,
+      dealingIndex: 0,
+      isPlayerReplacing: false,
+      isDealerReplacing: false,
+      replacingCards: []
+    });
     
-    setDeck(newDeck.slice(10));
-    setPlayerHand(newPlayerHand);
-    setDealerHand(newDealerHand);
+    const newDeck = shuffleDeck(createDeck());
+    
+    // 清空手牌，准备发牌动画
+    setPlayerHand([]);
+    setDealerHand([]);
     setSelectedCards([]);
-    setGamePhase('player-replace');
+    setGamePhase('dealing');
     setGameResult('');
     setPlayerEvaluation(null);
     setDealerEvaluation(null);
     setDealerReplacedCount(0);
+    
+    // 开始发牌动画
+    startDealingAnimation(newDeck);
+  };
+
+  // 发牌动画
+  const startDealingAnimation = (newDeck: Card[]) => {
+    setAnimationState(prev => ({ ...prev, isDealing: true, dealingIndex: 0 }));
+    
+    const dealCard = (index: number) => {
+      if (index >= 10) {
+        // 发牌完成
+        setDeck(newDeck.slice(10));
+        setAnimationState(prev => ({ ...prev, isDealing: false }));
+        setGamePhase('player-replace');
+        return;
+      }
+      
+      setAnimationState(prev => ({ ...prev, dealingIndex: index }));
+      
+      if (index < 5) {
+        // 发给玩家
+        setPlayerHand(prev => [...prev, newDeck[index]]);
+      } else {
+        // 发给庄家
+        setDealerHand(prev => [...prev, newDeck[index]]);
+      }
+      
+      // 继续发下一张牌
+      setTimeout(() => dealCard(index + 1), 300);
+    };
+    
+    dealCard(0);
   };
 
   // 重置游戏统计
@@ -85,22 +139,42 @@ export const Game: React.FC = () => {
       return;
     }
 
+    // 开始玩家换牌动画
+    setAnimationState(prev => ({ 
+      ...prev, 
+      isPlayerReplacing: true, 
+      replacingCards: [...selectedCards] 
+    }));
+
     const newPlayerHand = [...playerHand];
     const newDeck = [...deck];
     
-    selectedCards.forEach(index => {
-      newPlayerHand[index] = newDeck.shift()!;
-    });
+    // 逐张替换卡牌
+    let replaceIndex = 0;
+    const replaceNextCard = () => {
+      if (replaceIndex >= selectedCards.length) {
+        // 换牌完成
+        setAnimationState(prev => ({ ...prev, isPlayerReplacing: false, replacingCards: [] }));
+        setSelectedCards([]);
+        setGamePhase('dealer-replace');
+        
+        // 延迟处理庄家换牌
+        setTimeout(() => {
+          handleDealerReplace(newDeck, newPlayerHand);
+        }, 500);
+        return;
+      }
+      
+      const cardIndex = selectedCards[replaceIndex];
+      newPlayerHand[cardIndex] = newDeck.shift()!;
+      setPlayerHand([...newPlayerHand]);
+      setDeck([...newDeck]);
+      
+      replaceIndex++;
+      setTimeout(replaceNextCard, 400);
+    };
     
-    setPlayerHand(newPlayerHand);
-    setDeck(newDeck);
-    setSelectedCards([]);
-    setGamePhase('dealer-replace');
-    
-    // 延迟处理庄家换牌，给用户一些反馈时间
-    setTimeout(() => {
-      handleDealerReplace(newDeck, newPlayerHand);
-    }, 1000);
+    replaceNextCard();
   };
 
   // 庄家换牌
@@ -120,20 +194,40 @@ export const Game: React.FC = () => {
       return;
     }
     
+    // 开始庄家换牌动画
+    setAnimationState(prev => ({ 
+      ...prev, 
+      isDealerReplacing: true, 
+      replacingCards: dealerReplaceIndices 
+    }));
+    
     const newDealerHand = [...dealerHand];
     const newDeck = [...workingDeck];
     
-    dealerReplaceIndices.forEach(index => {
-      newDealerHand[index] = newDeck.shift()!;
-    });
+    // 逐张替换庄家卡牌
+    let replaceIndex = 0;
+    const replaceNextCard = () => {
+      if (replaceIndex >= dealerReplaceIndices.length) {
+        // 换牌完成
+        setAnimationState(prev => ({ ...prev, isDealerReplacing: false, replacingCards: [] }));
+        
+        // 延迟显示结果
+        setTimeout(() => {
+          revealAndCompare(workingPlayerHand, newDealerHand);
+        }, 800);
+        return;
+      }
+      
+      const cardIndex = dealerReplaceIndices[replaceIndex];
+      newDealerHand[cardIndex] = newDeck.shift()!;
+      setDealerHand([...newDealerHand]);
+      setDeck([...newDeck]);
+      
+      replaceIndex++;
+      setTimeout(replaceNextCard, 500);
+    };
     
-    setDealerHand(newDealerHand);
-    setDeck(newDeck);
-    
-    // 延迟显示结果
-    setTimeout(() => {
-      revealAndCompare(workingPlayerHand, newDealerHand);
-    }, 1500);
+    replaceNextCard();
   };
 
   // 比较并显示结果
@@ -261,10 +355,20 @@ export const Game: React.FC = () => {
             handEvaluation={dealerEvaluation}
             showEvaluation={gamePhase === 'game-over'}
             isDarkMode={isDarkMode}
+            animatingCards={animationState.isDealerReplacing ? animationState.replacingCards : []}
+            isDealing={animationState.isDealing && animationState.dealingIndex >= 5}
           />
 
           {/* 游戏状态显示 */}
           <div className="text-center py-2 sm:py-4">
+            {gamePhase === 'dealing' && (
+              <div className={`font-medium text-sm sm:text-base flex items-center justify-center gap-2 ${
+                isDarkMode ? 'text-green-400' : 'text-green-600'
+              }`}>
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent"></div>
+                {getTranslation('dealing', language)}
+              </div>
+            )}
             {gamePhase === 'player-replace' && (
               <div className="space-y-2">
                 <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
@@ -276,6 +380,14 @@ export const Game: React.FC = () => {
                 {selectedCards.length > 0 && (
                   <div className={`text-xs sm:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                     {getTranslation('selectedCards', language)}: {selectedCards.length}/3
+                  </div>
+                )}
+                {animationState.isPlayerReplacing && (
+                  <div className={`text-xs sm:text-sm flex items-center justify-center gap-2 ${
+                    isDarkMode ? 'text-yellow-400' : 'text-yellow-600'
+                  }`}>
+                    <div className="animate-spin rounded-full h-3 w-3 border-2 border-current border-t-transparent"></div>
+                    {getTranslation('playerReplacing', language)}
                   </div>
                 )}
               </div>
@@ -315,6 +427,8 @@ export const Game: React.FC = () => {
             handEvaluation={playerEvaluation}
             showEvaluation={gamePhase === 'game-over'}
             isDarkMode={isDarkMode}
+            animatingCards={animationState.isPlayerReplacing ? animationState.replacingCards : []}
+            isDealing={animationState.isDealing && animationState.dealingIndex < 5}
           />
 
           {/* 操作按钮 */}

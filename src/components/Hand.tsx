@@ -13,6 +13,8 @@ interface HandProps {
   handEvaluation?: HandEvaluation;
   showEvaluation?: boolean;
   isDarkMode?: boolean;
+  animatingCards?: number[];
+  isDealing?: boolean;
 }
 
 export const Hand: React.FC<HandProps> = ({
@@ -24,7 +26,9 @@ export const Hand: React.FC<HandProps> = ({
   language,
   handEvaluation,
   showEvaluation = false,
-  isDarkMode = false
+  isDarkMode = false,
+  animatingCards = [],
+  isDealing = false
 }) => {
   return (
     <div className="mb-4 sm:mb-6">
@@ -38,6 +42,11 @@ export const Hand: React.FC<HandProps> = ({
             isSelected={selectedCards.includes(index)}
             onClick={() => onCardClick?.(index)}
             isDarkMode={isDarkMode}
+            className={`
+              ${isDealing ? 'animate-bounce' : ''}
+              ${animatingCards.includes(index) ? 'animate-pulse scale-110' : ''}
+              transition-all duration-300
+            `}
           />
         ))}
       </div>

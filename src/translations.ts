@@ -30,6 +30,8 @@ export const translations = {
     dealerReplaced: '庄家换牌',
     cards: '张',
     gameRules: '游戏规则',
+    dealing: '发牌中...',
+    playerReplacing: '换牌中...',
     replaceHint: '选择要换的牌（最多3张），然后点击换牌按钮开始游戏',
     continueHint: '点击"继续游戏"不换牌直接开始，或者点击牌面来换牌（最多三张）',
     handTypes: {
@@ -73,6 +75,8 @@ export const translations = {
     dealerReplaced: 'Dealer replaced',
     cards: 'cards',
     gameRules: 'Game Rules',
+    dealing: 'Dealing cards...',
+    playerReplacing: 'Replacing cards...',
     replaceHint: 'Select cards to replace (max 3), then click replace button to start',
     continueHint: 'Click "Continue Game" to start without replacing cards, or click card faces to replace cards (max 3)',
     handTypes: {
