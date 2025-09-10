@@ -177,7 +177,7 @@ export const Card: React.FC<CardProps> = ({
         </div>
       )}
       
-      <div className={`text-xs sm:text-xs font-bold ${getSuitColor(card.suit)} leading-none self-end transform rotate-180`}>
+      <div className={`text-xs sm:text-xs font-bold ${getSuitColor(card.suit)} leading-none self-end transform rotate-180 z-10 relative`}>
         <div>{card.rank}</div>
         <div>{getSuitSymbol(card.suit)}</div>
       </div>
