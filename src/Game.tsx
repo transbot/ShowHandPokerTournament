@@ -79,6 +79,19 @@ export const Game: React.FC = () => {
   const startDealingAnimation = (newDeck: Card[]) => {
     setAnimationState(prev => ({ ...prev, isDealing: true, dealingIndex: 0 }));
     
+    // 准备最终的手牌
+    const finalPlayerHand: Card[] = [];
+    const finalDealerHand: Card[] = [];
+    
+    // 分配牌给玩家和庄家
+    for (let i = 0; i < 10; i++) {
+      if (i % 2 === 0) {
+        finalPlayerHand.push(newDeck[i]);
+      } else {
+        finalDealerHand.push(newDeck[i]);
+      }
+    }
+    
     const dealCard = (index: number) => {
       if (index >= 10) {
         // 发牌完成
@@ -92,10 +105,20 @@ export const Game: React.FC = () => {
       
       if (index % 2 === 0) {
         // 发给玩家
-        setPlayerHand(prev => [...prev, newDeck[index]]);
+        const playerCardIndex = Math.floor(index / 2);
+        setPlayerHand(prev => {
+          const newHand = [...prev];
+          newHand[playerCardIndex] = finalPlayerHand[playerCardIndex];
+          return newHand;
+        });
       } else {
         // 发给庄家
-        setDealerHand(prev => [...prev, newDeck[index]]);
+        const dealerCardIndex = Math.floor(index / 2);
+        setDealerHand(prev => {
+          const newHand = [...prev];
+          newHand[dealerCardIndex] = finalDealerHand[dealerCardIndex];
+          return newHand;
+        });
       }
       
       // 继续发下一张牌
