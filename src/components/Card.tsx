@@ -129,12 +129,12 @@ export const Card: React.FC<CardProps> = ({
   
   if (isHidden) {
     return (
-      <div className={`w-12 h-18 sm:w-16 sm:h-24 border-2 rounded-lg flex items-center justify-center ${
+      <div className={`w-16 h-24 sm:w-20 sm:h-32 border-2 rounded-lg flex items-center justify-center ${
         isDarkMode 
           ? 'bg-gray-600 border-gray-500' 
           : 'bg-blue-600 border-blue-700'
       } ${className}`}>
-        <div className={`w-6 h-9 sm:w-8 sm:h-12 rounded border opacity-60 ${
+        <div className={`w-8 h-12 sm:w-10 sm:h-16 rounded border opacity-60 ${
           isDarkMode 
             ? 'bg-gray-500 border-gray-400' 
             : 'bg-blue-500 border-blue-400'
@@ -146,7 +146,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={`
-        w-12 h-18 sm:w-16 sm:h-24 border-2 rounded-lg flex flex-col justify-between p-1 cursor-pointer
+        w-16 h-24 sm:w-20 sm:h-32 border-2 rounded-lg flex flex-col justify-between p-2 cursor-pointer relative
         transition-all duration-200 hover:scale-105 hover:shadow-lg
         ${isDarkMode ? 'bg-gray-100' : 'bg-white'}
         ${isSelected 
@@ -164,22 +164,24 @@ export const Card: React.FC<CardProps> = ({
       `}
       onClick={onClick}
     >
-      <div className={`text-xs sm:text-xs font-bold ${getSuitColor(card.suit)} leading-none`}>
+      <div className={`text-xs sm:text-sm font-bold ${getSuitColor(card.suit)} leading-none`}>
         <div>{card.rank}</div>
         <div>{getSuitSymbol(card.suit)}</div>
       </div>
       
       {isFaceCard ? (
         <div className="flex-1 flex items-center justify-center">
-          {getFaceCardPattern(card.rank, card.suit)}
+          <div className="scale-110 sm:scale-125">
+            {getFaceCardPattern(card.rank, card.suit)}
+          </div>
         </div>
       ) : (
-        <div className={`text-lg sm:text-2xl ${getSuitColor(card.suit)} text-center`}>
+        <div className={`text-2xl sm:text-3xl ${getSuitColor(card.suit)} text-center`}>
           {getSuitSymbol(card.suit)}
         </div>
       )}
       
-      <div className={`text-xs sm:text-xs font-bold ${getSuitColor(card.suit)} leading-none self-end transform rotate-180 z-10 relative`}>
+      <div className={`absolute bottom-2 right-2 text-xs sm:text-sm font-bold ${getSuitColor(card.suit)} leading-none transform rotate-180 z-10`}>
         <div>{card.rank}</div>
         <div>{getSuitSymbol(card.suit)}</div>
       </div>
