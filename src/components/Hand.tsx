@@ -47,7 +47,6 @@ export const Hand: React.FC<HandProps> = ({
               ${animatingCards.includes(index) ? 'animate-pulse scale-110' : ''}
               transition-all duration-300
             `}
-            isDealing={isDealing}
           />
         ))}
       </div>
