@@ -31,7 +31,7 @@ export const translations = {
     cards: '张',
     gameRules: '游戏规则',
     replaceHint: '选择要换的牌（最多3张），然后点击换牌按钮开始游戏',
-    continueHint: '点击"继续游戏"不换牌直接开始',
+    continueHint: '点击"继续游戏"不换牌直接开始，或者点击牌面来换牌（最多三张）',
     handTypes: {
       'straight-flush': '同花顺',
       'four-of-a-kind': '四条',
@@ -74,7 +74,7 @@ export const translations = {
     cards: 'cards',
     gameRules: 'Game Rules',
     replaceHint: 'Select cards to replace (max 3), then click replace button to start',
-    continueHint: 'Click "Continue Game" to start without replacing cards',
+    continueHint: 'Click "Continue Game" to start without replacing cards, or click card faces to replace cards (max 3)',
     handTypes: {
       'straight-flush': 'Straight Flush',
       'four-of-a-kind': 'Four of a Kind',
