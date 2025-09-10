@@ -27,6 +27,7 @@ export const Game: React.FC = () => {
   const { playSound, toggleSound, isSoundEnabled } = useSound();
   const [language, setLanguage] = useState<Language>(getSystemLanguage());
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [deck, setDeck] = useState<Card[]>([]);
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
   const [dealerHand, setDealerHand] = useState<Card[]>([]);
@@ -329,9 +330,10 @@ export const Game: React.FC = () => {
   };
   
   const handleToggleSound = () => {
-    const newState = toggleSound();
+    toggleSound();
+    setSoundEnabled(isSoundEnabled());
     // 播放测试音效来确认状态
-    if (newState) {
+    if (isSoundEnabled()) {
       playSound('deal');
     }
   };
@@ -419,13 +421,13 @@ export const Game: React.FC = () => {
                 <button
                   onClick={handleToggleSound}
                   className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
-                    isSoundEnabled()
+                    soundEnabled
                       ? (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-600 text-white hover:bg-green-700')
                       : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
                   }`}
                 >
                   <span>🔊</span>
-                  {isSoundEnabled() ? (language === 'zh' ? '音效' : 'Sound') : (language === 'zh' ? '静音' : 'Mute')}
+                  {soundEnabled ? (language === 'zh' ? '音效' : 'Sound') : (language === 'zh' ? '静音' : 'Mute')}
                 </button>
               </div>
             </div>

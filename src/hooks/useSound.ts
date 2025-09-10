@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 // 音效类型
 export type SoundType = 'deal' | 'win' | 'lose' | 'tie' | 'replace' | 'shuffle';
@@ -39,7 +39,7 @@ const SOUND_CONFIG = {
 
 export const useSound = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
-  const isEnabledRef = useRef(true);
+  const [isEnabled, setIsEnabled] = useState(true);
 
   // 初始化音频上下文
   const initAudioContext = useCallback(() => {
@@ -57,7 +57,7 @@ export const useSound = () => {
   // 播放单个音调
   const playTone = useCallback((frequency: number, duration: number, type: OscillatorType = 'sine', delay: number = 0) => {
     const audioContext = initAudioContext();
-    if (!audioContext || !isEnabledRef.current) return;
+    if (!audioContext || !isEnabled) return;
 
     try {
       const oscillator = audioContext.createOscillator();
@@ -79,11 +79,11 @@ export const useSound = () => {
     } catch (error) {
       console.warn('Error playing tone:', error);
     }
-  }, [initAudioContext]);
+  }, [initAudioContext, isEnabled]);
 
   // 播放音效
   const playSound = useCallback((soundType: SoundType) => {
-    if (!isEnabledRef.current) return;
+    if (!isEnabled) return;
 
     const config = SOUND_CONFIG[soundType];
     
@@ -115,22 +115,22 @@ export const useSound = () => {
         });
         break;
     }
-  }, [playTone]);
+  }, [playTone, isEnabled]);
 
   // 切换音效开关
   const toggleSound = useCallback(() => {
-    isEnabledRef.current = !isEnabledRef.current;
-    return isEnabledRef.current;
+    setIsEnabled(prev => !prev);
   }, []);
 
   // 获取音效状态
   const isSoundEnabled = useCallback(() => {
-    return isEnabledRef.current;
-  }, []);
+    return isEnabled;
+  }, [isEnabled]);
 
   return {
     playSound,
     toggleSound,
-    isSoundEnabled
+    isSoundEnabled,
+    isEnabled
   };
 };
