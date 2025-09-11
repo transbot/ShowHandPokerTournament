@@ -53,6 +53,7 @@ export const Game: React.FC = () => {
     isDealerReplacing: false,
     replacingCards: []
   });
+  const [showResultAnimation, setShowResultAnimation] = useState<boolean>(false);
 
   // 开始新游戏
   const startNewGame = () => {
@@ -80,6 +81,7 @@ export const Game: React.FC = () => {
     setDealerEvaluation(null);
     setDealerReplacedCount(0);
     setPlayerReplacedCount(0);
+    setShowResultAnimation(false);
     
     // 开始发牌动画
     startDealingAnimation(newDeck);
@@ -321,6 +323,15 @@ export const Game: React.FC = () => {
     
     setGameResult(result);
     setGamePhase('game-over');
+    
+    // 触发结果动画
+    setTimeout(() => {
+      setShowResultAnimation(true);
+      // 动画持续2秒后重置
+      setTimeout(() => {
+        setShowResultAnimation(false);
+      }, 2000);
+    }, 500);
   };
 
   // 初始化游戏
@@ -601,7 +612,16 @@ export const Game: React.FC = () => {
               {gamePhase === 'game-over' && (
                 <div className="space-y-2">
                   <div className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-                    {getTranslation('result', language)}: <span className={isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
+                    {getTranslation('result', language)}: <span className={`
+                      ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}
+                      ${showResultAnimation ? 'animate-bounce' : ''}
+                      transition-all duration-300
+                      ${showResultAnimation && gameResult === 'playerWins' ? 'text-green-500 scale-150' : ''}
+                      ${showResultAnimation && gameResult === 'dealerWins' ? 'text-red-500 scale-150' : ''}
+                      ${showResultAnimation && gameResult === 'tie' ? 'text-yellow-500 scale-150' : ''}
+                    `}>
+                      {getTranslation(gameResult, language)}
+                    </span>
                   </div>
                   <div className={`text-sm sm:text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                     {getTranslation('player', language)}{getTranslation('dealerReplaced', language)}: {playerReplacedCount} {getTranslation('cards', language)} | {getTranslation('dealer', language)}{getTranslation('dealerReplaced', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
