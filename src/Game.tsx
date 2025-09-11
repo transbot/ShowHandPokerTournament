@@ -595,7 +595,7 @@ export const Game: React.FC = () => {
                   {getTranslation('result', language)}: <span className={isDarkMode ? 'text-blue-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
                 </div>
                 <div className={`text-sm sm:text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {getTranslation('player', language)}: {playerReplacedCount} {getTranslation('cards', language)} | {getTranslation('dealer', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
+                  {getTranslation('player', language)}{getTranslation('dealerReplaced', language)}: {playerReplacedCount} {getTranslation('cards', language)} | {getTranslation('dealer', language)}{getTranslation('dealerReplaced', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
                 </div>
               </div>
             )}
