@@ -393,7 +393,6 @@ export const Game: React.FC = () => {
               </button>
             </div>
             
-            {/* 大屏端：按钮在标题两侧 */}
             <div className="hidden sm:flex sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={toggleTheme}
