@@ -16,8 +16,8 @@ const SOUND_CONFIG = {
     type: 'triangle' as OscillatorType
   },
   win: {
-    frequencies: [523, 659, 784, 1047], // C-E-G-C 和弦
-    duration: 200,
+    frequencies: [523, 659, 784, 1047, 1319], // C-E-G-C-E 上升和弦
+    duration: 300,
     type: 'sine' as OscillatorType
   },
   lose: {
@@ -101,8 +101,15 @@ export const useSound = () => {
       case 'win':
         // 播放胜利和弦
         config.frequencies.forEach((freq, index) => {
-          playTone(freq, config.duration, config.type, index * 0.1);
+          playTone(freq, config.duration, config.type, index * 0.08);
         });
+        // 添加额外的胜利音效层次
+        setTimeout(() => {
+          // 第二层：更高音的装饰音
+          [1047, 1319, 1568].forEach((freq, index) => {
+            playTone(freq, 150, 'triangle', index * 0.1);
+          });
+        }, 400);
         break;
         
       case 'lose':
