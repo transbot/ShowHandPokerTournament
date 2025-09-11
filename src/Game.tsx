@@ -502,8 +502,7 @@ export const Game: React.FC = () => {
               }`}
             >
               <Github size={14} className="sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">{language === 'zh' ? 'GitHub项目' : 'GitHub Project'}</span>
-              <span className="xs:hidden">GitHub</span>
+              <span>{language === 'zh' ? 'GitHub项目' : 'GitHub Project'}</span>
               <ExternalLink size={12} className="sm:w-3 sm:h-3" />
             </a>
           </div>
