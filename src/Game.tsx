@@ -487,8 +487,7 @@ export const Game: React.FC = () => {
               }`}
             >
               <User size={14} className="sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">{language === 'zh' ? '周靖的博客' : "Zhou Jing's Blog"}</span>
-              <span className="xs:hidden">{language === 'zh' ? '博客' : 'Blog'}</span>
+              <span>{language === 'zh' ? '周靖的博客' : "Zhou Jing's Blog"}</span>
               <ExternalLink size={12} className="sm:w-3 sm:h-3" />
             </a>
             
