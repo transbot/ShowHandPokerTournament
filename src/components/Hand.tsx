@@ -39,20 +39,20 @@ export const Hand: React.FC<HandProps> = ({
       
       <div className="relative mb-2 sm:mb-3">
         {/* 固定头像 - 绝对定位在左侧 */}
-        <div className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shadow-lg z-10 ${
+        <div className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shadow-lg z-10 ${
           isDealer 
             ? (isDarkMode ? 'bg-red-600' : 'bg-red-500')
             : (isDarkMode ? 'bg-blue-600' : 'bg-blue-500')
         }`}>
           {isDealer ? (
-            <Bot size={24} className="sm:w-8 sm:h-8 text-white" />
+            <Bot size={20} className="sm:w-8 sm:h-8 text-white" />
           ) : (
-            <User size={24} className="sm:w-8 sm:h-8 text-white" />
+            <User size={20} className="sm:w-8 sm:h-8 text-white" />
           )}
         </div>
         
         {/* 手牌区域 - 左侧留出头像空间 */}
-        <div className="flex gap-1 sm:gap-2 flex-wrap justify-center ml-20 sm:ml-24">
+        <div className="flex gap-1 sm:gap-2 flex-wrap justify-center ml-14 sm:ml-24">
           {cards.map((card, index) => (
             <Card
               key={`${card.id}-${index}`}
