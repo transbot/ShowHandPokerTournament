@@ -347,7 +347,7 @@ export const Game: React.FC = () => {
   return (
     <div className={`min-h-screen p-2 sm:p-4 transition-colors duration-300 ${
       isDarkMode 
-        ? 'bg-gradient-to-br from-gray-900 to-gray-800' 
+        ? 'bg-gradient-to-br from-purple-900 via-pink-900 to-cyan-900' 
         : 'bg-gradient-to-br from-green-50 to-blue-50'
     }`}>
       <div className="max-w-4xl mx-auto">
@@ -360,7 +360,7 @@ export const Game: React.FC = () => {
                 onClick={toggleTheme}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
                   isDarkMode
-                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white hover:from-pink-500 hover:to-purple-500 shadow-lg shadow-pink-500/25'
                     : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
                 }`}
               >
@@ -372,8 +372,8 @@ export const Game: React.FC = () => {
                 onClick={toggleLanguage}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
                   language === 'zh'
-                    ? (isDarkMode ? 'bg-blue-700 text-blue-200 hover:bg-blue-600' : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
-                    : (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-100 text-green-800 hover:bg-green-200')
+                    ? (isDarkMode ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 shadow-lg shadow-cyan-500/25' : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
+                    : (isDarkMode ? 'bg-gradient-to-r from-green-600 to-teal-600 text-white hover:from-green-500 hover:to-teal-500 shadow-lg shadow-green-500/25' : 'bg-green-100 text-green-800 hover:bg-green-200')
                 }`}
               >
                 <Globe size={14} />
@@ -384,8 +384,8 @@ export const Game: React.FC = () => {
                 onClick={handleToggleSound}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs font-medium ${
                   isSoundEnabled()
-                    ? (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-600 text-white hover:bg-green-700')
-                    : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
+                    ? (isDarkMode ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-500 shadow-lg shadow-green-500/25' : 'bg-green-600 text-white hover:bg-green-700')
+                    : (isDarkMode ? 'bg-gradient-to-r from-gray-700 to-gray-600 text-gray-300 hover:from-gray-600 hover:to-gray-500' : 'bg-gray-400 text-white hover:bg-gray-500')
                 }`}
               >
                 <span className="text-xs">{soundEnabled ? '🔊' : '🔇'}</span>
@@ -399,7 +399,7 @@ export const Game: React.FC = () => {
                 onClick={toggleTheme}
                 className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
                   isDarkMode
-                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white hover:from-pink-500 hover:to-purple-500 shadow-lg shadow-pink-500/25'
                     : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
                 }`}
               >
@@ -408,6 +408,7 @@ export const Game: React.FC = () => {
               </button>
               
               <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400' : 'text-gray-800'}`}>
                 {getTranslation('title', language)}
               </h1>
               
@@ -416,8 +417,8 @@ export const Game: React.FC = () => {
                   onClick={toggleLanguage}
                   className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
                     language === 'zh'
-                      ? (isDarkMode ? 'bg-blue-700 text-blue-200 hover:bg-blue-600' : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
-                      : (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-100 text-green-800 hover:bg-green-200')
+                      ? (isDarkMode ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 shadow-lg shadow-cyan-500/25' : 'bg-blue-100 text-blue-800 hover:bg-blue-200')
+                      : (isDarkMode ? 'bg-gradient-to-r from-green-600 to-teal-600 text-white hover:from-green-500 hover:to-teal-500 shadow-lg shadow-green-500/25' : 'bg-green-100 text-green-800 hover:bg-green-200')
                   }`}
                 >
                   <Globe size={16} />
@@ -428,8 +429,8 @@ export const Game: React.FC = () => {
                   onClick={handleToggleSound}
                   className={`flex items-center gap-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm font-medium ${
                     soundEnabled
-                      ? (isDarkMode ? 'bg-green-700 text-green-200 hover:bg-green-600' : 'bg-green-600 text-white hover:bg-green-700')
-                      : (isDarkMode ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-gray-400 text-white hover:bg-gray-500')
+                      ? (isDarkMode ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-500 shadow-lg shadow-green-500/25' : 'bg-green-600 text-white hover:bg-green-700')
+                      : (isDarkMode ? 'bg-gradient-to-r from-gray-700 to-gray-600 text-gray-300 hover:from-gray-600 hover:to-gray-500' : 'bg-gray-400 text-white hover:bg-gray-500')
                   }`}
                 >
                   <span className="text-xs">{soundEnabled ? '🔊' : '🔇'}</span>
@@ -439,7 +440,7 @@ export const Game: React.FC = () => {
             </div>
             
             {/* 手机端标题 */}
-            <h1 className={`text-xl font-bold sm:hidden ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+            <h1 className={`text-xl font-bold sm:hidden ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400' : 'text-gray-800'}`}>
               {getTranslation('title', language)}
             </h1>
           </div>
@@ -482,7 +483,7 @@ export const Game: React.FC = () => {
               rel="noopener noreferrer"
               className={`flex items-center gap-1 px-2 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium hover:scale-105 ${
                 isDarkMode
-                  ? 'bg-purple-600 text-white hover:bg-purple-700'
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-500 hover:to-pink-500 shadow-lg shadow-purple-500/25'
                   : 'bg-purple-500 text-white hover:bg-purple-600'
               }`}
             >
@@ -497,7 +498,7 @@ export const Game: React.FC = () => {
               rel="noopener noreferrer"
               className={`flex items-center gap-1 px-2 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium hover:scale-105 ${
                 isDarkMode
-                  ? 'bg-gray-700 text-white hover:bg-gray-600'
+                  ? 'bg-gradient-to-r from-gray-800 to-gray-700 text-white hover:from-gray-700 hover:to-gray-600 shadow-lg shadow-gray-500/25'
                   : 'bg-gray-800 text-white hover:bg-gray-700'
               }`}
             >
@@ -513,7 +514,7 @@ export const Game: React.FC = () => {
               onClick={resetGame}
               className={`flex items-center gap-2 px-4 py-3 sm:px-6 sm:py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 text-sm sm:text-base font-bold mx-auto hover:scale-105 ${
                 isDarkMode
-                  ? 'bg-red-600 text-white hover:bg-red-700'
+                  ? 'bg-gradient-to-r from-red-600 to-pink-600 text-white hover:from-red-500 hover:to-pink-500 shadow-lg shadow-red-500/25'
                   : 'bg-red-500 text-white hover:bg-red-600'
               }`}
             >
@@ -524,12 +525,21 @@ export const Game: React.FC = () => {
         </div>
 
         {/* 统计信息 */}
-        <GameStatsComponent stats={stats} language={language} isDarkMode={isDarkMode} />
+        <div className={isDarkMode ? 'relative' : ''}>
+          {isDarkMode && (
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 rounded-lg blur-xl"></div>
+          )}
+          <GameStatsComponent stats={stats} language={language} isDarkMode={isDarkMode} />
+        </div>
 
         {/* 游戏区域 */}
-        <div className={`rounded-xl shadow-xl p-3 sm:p-6 mb-4 sm:mb-6 ${
-          isDarkMode ? 'bg-gray-800' : 'bg-white'
+        <div className={`rounded-xl shadow-xl p-3 sm:p-6 mb-4 sm:mb-6 relative ${
+          isDarkMode ? 'bg-gray-900/80 backdrop-blur-sm border border-purple-500/20' : 'bg-white'
         }`}>
+          {isDarkMode && (
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-cyan-500/5 rounded-xl"></div>
+          )}
+          <div className="relative z-10">
           {/* 庄家手牌 */}
           <Hand
             cards={dealerHand}
@@ -547,7 +557,7 @@ export const Game: React.FC = () => {
           <div className="text-center py-2 sm:py-4">
             {gamePhase === 'dealing' && (
               <div className={`font-medium text-sm sm:text-base flex items-center justify-center gap-2 ${
-                isDarkMode ? 'text-green-400' : 'text-green-600'
+                isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400' : 'text-green-600'
               }`}>
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent"></div>
                 {getTranslation('dealing', language)}
@@ -556,6 +566,7 @@ export const Game: React.FC = () => {
             {gamePhase === 'player-replace' && (
               <div className="space-y-2">
                 <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}`}>
                   {selectedCards.length > 0 
                     ? getTranslation('replaceHint', language)
                     : getTranslation('continueHint', language)
@@ -568,7 +579,7 @@ export const Game: React.FC = () => {
                 )}
                 {animationState.isPlayerReplacing && (
                   <div className={`text-xs sm:text-sm flex items-center justify-center gap-2 ${
-                    isDarkMode ? 'text-yellow-400' : 'text-yellow-600'
+                    isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400' : 'text-yellow-600'
                   }`}>
                     <div className="animate-spin rounded-full h-3 w-3 border-2 border-current border-t-transparent"></div>
                     {getTranslation('playerReplacing', language)}
@@ -578,7 +589,7 @@ export const Game: React.FC = () => {
             )}
             {gamePhase === 'dealer-replace' && (
               <div className={`font-medium text-sm sm:text-base flex items-center justify-center gap-2 ${
-                isDarkMode ? 'text-orange-400' : 'text-orange-600'
+                isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400' : 'text-orange-600'
               }`}>
                 <RotateCcw className="animate-spin" size={14} />
                 {getTranslation('dealerReplacing', language)}
@@ -586,13 +597,16 @@ export const Game: React.FC = () => {
             )}
             {gamePhase === 'revealing' && (
               <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`}>
+              <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400' : 'text-purple-600'}`}>
                 {getTranslation('comparing', language)}
               </div>
             )}
             {gamePhase === 'game-over' && (
               <div className="space-y-2">
                 <div className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                <div className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
                   {getTranslation('result', language)}: <span className={isDarkMode ? 'text-blue-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
+                  {getTranslation('result', language)}: <span className={isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
                 </div>
                 <div className={`text-sm sm:text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   {getTranslation('player', language)}{getTranslation('dealerReplaced', language)}: {playerReplacedCount} {getTranslation('cards', language)} | {getTranslation('dealer', language)}{getTranslation('dealerReplaced', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
@@ -622,7 +636,7 @@ export const Game: React.FC = () => {
                 onClick={replacePlayerCards}
                 className={`font-bold py-2 px-4 sm:py-3 sm:px-8 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg flex items-center gap-2 mx-auto text-sm sm:text-base ${
                   isDarkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-500 hover:to-cyan-500 shadow-lg shadow-blue-500/25'
                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}
               >
@@ -638,7 +652,7 @@ export const Game: React.FC = () => {
                 onClick={startNewGame}
                 className={`font-bold py-2 px-4 sm:py-3 sm:px-8 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg flex items-center gap-2 mx-auto text-sm sm:text-base ${
                   isDarkMode
-                    ? 'bg-green-600 hover:bg-green-700 text-white'
+                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-500 shadow-lg shadow-green-500/25'
                     : 'bg-green-600 hover:bg-green-700 text-white'
                 }`}
               >
@@ -647,14 +661,19 @@ export const Game: React.FC = () => {
               </button>
             )}
           </div>
+          </div>
         </div>
 
         {/* 游戏说明 */}
         <div className={`rounded-lg p-4 sm:p-6 mb-4 ${
-          isDarkMode ? 'bg-gray-800 border border-gray-700' : 'bg-gray-50 border border-gray-200'
+          isDarkMode ? 'bg-gray-900/80 backdrop-blur-sm border border-purple-500/20 relative' : 'bg-gray-50 border border-gray-200'
         }`}>
+          {isDarkMode && (
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-cyan-500/5 rounded-lg"></div>
+          )}
+          <div className="relative z-10">
           <h3 className={`text-base sm:text-lg font-bold mb-3 text-center ${
-            isDarkMode ? 'text-yellow-400' : 'text-orange-600'
+            isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400' : 'text-orange-600'
           }`}>
             📋 {getTranslation('gameRules', language)}
           </h3>
@@ -671,6 +690,7 @@ export const Game: React.FC = () => {
                 : '🏆 Hand rankings: Straight Flush > Four of a Kind > Full House > Flush > Straight > Three of a Kind > Two Pairs > One Pair > High Card'
               }
             </p>
+          </div>
           </div>
         </div>
       </div>

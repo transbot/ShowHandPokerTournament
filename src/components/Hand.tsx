@@ -35,14 +35,14 @@ export const Hand: React.FC<HandProps> = ({
   
   return (
     <div className="mb-4 sm:mb-6">
-      <h3 className={`text-base sm:text-lg font-semibold mb-2 sm:mb-3 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>{title}</h3>
+      <h3 className={`text-base sm:text-lg font-semibold mb-2 sm:mb-3 ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400' : 'text-gray-800'}`}>{title}</h3>
       
       <div className="relative mb-2 sm:mb-3">
         {/* 固定头像 - 绝对定位在左侧 */}
         <div className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-12 h-12 sm:w-20 sm:h-20 rounded-full flex items-center justify-center shadow-lg z-10 ${
           isDealer 
-            ? (isDarkMode ? 'bg-red-600' : 'bg-red-500')
-            : (isDarkMode ? 'bg-blue-600' : 'bg-blue-500')
+            ? (isDarkMode ? 'bg-gradient-to-r from-red-600 to-pink-600 shadow-lg shadow-red-500/25' : 'bg-red-500')
+            : (isDarkMode ? 'bg-gradient-to-r from-blue-600 to-cyan-600 shadow-lg shadow-blue-500/25' : 'bg-blue-500')
         }`}>
           {isDealer ? (
             <Bot size={20} className="sm:w-8 sm:h-8 text-white" />
@@ -75,7 +75,7 @@ export const Hand: React.FC<HandProps> = ({
         <div className="text-center">
           <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
             isDarkMode 
-              ? 'bg-gray-700 text-gray-300' 
+              ? 'bg-gradient-to-r from-purple-600/80 to-pink-600/80 text-white backdrop-blur-sm border border-purple-500/20' 
               : 'bg-gray-100 text-gray-700'
           }`}>
             {getTranslation(`handTypes.${handEvaluation.type}`, language)}
