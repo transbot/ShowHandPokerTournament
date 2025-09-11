@@ -469,21 +469,6 @@ export const Game: React.FC = () => {
               {language === 'zh' ? '中文' : 'English'}
             </button>
           </div>
-          {/* 重置游戏按钮 */}
-          <div className="mb-2 sm:mb-4">
-            <button
-              onClick={resetGame}
-              className={`flex items-center gap-2 px-3 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium mx-auto ${
-                isDarkMode
-                  ? 'bg-red-600 text-white hover:bg-red-700'
-                  : 'bg-red-500 text-white hover:bg-red-600'
-              }`}
-            >
-              <RefreshCw size={14} className="sm:w-4 sm:h-4" />
-              {language === 'zh' ? '重置游戏' : 'Reset Game'}
-            </button>
-          </div>
-          
           {/* 外部链接按钮 */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-4">
             <a
@@ -515,6 +500,21 @@ export const Game: React.FC = () => {
               {language === 'zh' ? 'GitHub项目' : 'GitHub Project'}
               <ExternalLink size={12} className="sm:w-3 sm:h-3" />
             </a>
+          </div>
+          
+          {/* 重置游戏按钮 */}
+          <div className="mb-4 sm:mb-6">
+            <button
+              onClick={resetGame}
+              className={`flex items-center gap-2 px-4 py-3 sm:px-6 sm:py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 text-sm sm:text-base font-bold mx-auto hover:scale-105 ${
+                isDarkMode
+                  ? 'bg-red-600 text-white hover:bg-red-700'
+                  : 'bg-red-500 text-white hover:bg-red-600'
+              }`}
+            >
+              <RefreshCw size={16} className="sm:w-5 sm:h-5" />
+              {language === 'zh' ? '重置游戏' : 'Reset Game'}
+            </button>
           </div>
         </div>
 
