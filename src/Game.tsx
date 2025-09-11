@@ -475,19 +475,20 @@ export const Game: React.FC = () => {
             </button>
           </div>
           {/* 外部链接按钮 */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-4">
+          <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 mb-4">
             <a
               href="https://bookzhou.com"
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-3 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium hover:scale-105 ${
+              className={`flex items-center gap-1 px-2 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium hover:scale-105 ${
                 isDarkMode
                   ? 'bg-purple-600 text-white hover:bg-purple-700'
                   : 'bg-purple-500 text-white hover:bg-purple-600'
               }`}
             >
               <User size={14} className="sm:w-4 sm:h-4" />
-              {language === 'zh' ? '周靖的博客' : "Zhou Jing's Blog"}
+              <span className="hidden xs:inline">{language === 'zh' ? '周靖的博客' : "Zhou Jing's Blog"}</span>
+              <span className="xs:hidden">{language === 'zh' ? '博客' : 'Blog'}</span>
               <ExternalLink size={12} className="sm:w-3 sm:h-3" />
             </a>
             
@@ -495,14 +496,15 @@ export const Game: React.FC = () => {
               href="https://github.com/transbot/ShowHandPokerTournament"
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-3 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium hover:scale-105 ${
+              className={`flex items-center gap-1 px-2 py-2 sm:px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm font-medium hover:scale-105 ${
                 isDarkMode
                   ? 'bg-gray-700 text-white hover:bg-gray-600'
                   : 'bg-gray-800 text-white hover:bg-gray-700'
               }`}
             >
               <Github size={14} className="sm:w-4 sm:h-4" />
-              {language === 'zh' ? 'GitHub项目' : 'GitHub Project'}
+              <span className="hidden xs:inline">{language === 'zh' ? 'GitHub项目' : 'GitHub Project'}</span>
+              <span className="xs:hidden">GitHub</span>
               <ExternalLink size={12} className="sm:w-3 sm:h-3" />
             </a>
           </div>
