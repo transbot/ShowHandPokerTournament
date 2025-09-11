@@ -405,9 +405,8 @@ export const Game: React.FC = () => {
                 {isDarkMode ? <Moon size={16} /> : <Sun size={16} />}
                 {isDarkMode ? (language === 'zh' ? '深色' : 'Dark') : (language === 'zh' ? '浅色' : 'Light')}
               </button>
-              
-              <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-              <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400' : 'text-gray-800'}`}>
+            
+            <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400' : 'text-gray-800'}`}>
                 {getTranslation('title', language)}
               </h1>
               
