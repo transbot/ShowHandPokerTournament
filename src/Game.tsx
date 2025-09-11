@@ -44,6 +44,7 @@ export const Game: React.FC = () => {
   const [playerEvaluation, setPlayerEvaluation] = useState<HandEvaluation | null>(null);
   const [dealerEvaluation, setDealerEvaluation] = useState<HandEvaluation | null>(null);
   const [dealerReplacedCount, setDealerReplacedCount] = useState<number>(0);
+  const [playerReplacedCount, setPlayerReplacedCount] = useState<number>(0);
   const [animationState, setAnimationState] = useState<AnimationState>({
     isDealing: false,
     dealingIndex: 0,
@@ -77,6 +78,7 @@ export const Game: React.FC = () => {
     setPlayerEvaluation(null);
     setDealerEvaluation(null);
     setDealerReplacedCount(0);
+    setPlayerReplacedCount(0);
     
     // 开始发牌动画
     startDealingAnimation(newDeck);
@@ -166,6 +168,9 @@ export const Game: React.FC = () => {
 
   // 玩家换牌
   const replacePlayerCards = () => {
+    const replaceCount = selectedCards.length;
+    setPlayerReplacedCount(replaceCount);
+    
     if (selectedCards.length === 0) {
       // 玩家选择不换牌，直接进入庄家阶段
       setGamePhase('dealer-replace');
@@ -590,7 +595,7 @@ export const Game: React.FC = () => {
                   {getTranslation('result', language)}: <span className={isDarkMode ? 'text-blue-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
                 </div>
                 <div className={`text-sm sm:text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {getTranslation('dealerReplaced', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
+                  {getTranslation('player', language)}: {playerReplacedCount} {getTranslation('cards', language)} | {getTranslation('dealer', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
                 </div>
               </div>
             )}
