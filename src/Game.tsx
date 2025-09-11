@@ -18,6 +18,7 @@ interface AnimationState {
   isDealerReplacing: boolean;
   replacingCards: number[];
 }
+
 export const Game: React.FC = () => {
   // 根据用户系统环境自动设置语言
   const getSystemLanguage = (): Language => {
@@ -406,7 +407,7 @@ export const Game: React.FC = () => {
                 {isDarkMode ? (language === 'zh' ? '深色' : 'Dark') : (language === 'zh' ? '浅色' : 'Light')}
               </button>
             
-            <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400' : 'text-gray-800'}`}>
+              <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400' : 'text-gray-800'}`}>
                 {getTranslation('title', language)}
               </h1>
               
@@ -538,127 +539,123 @@ export const Game: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-cyan-500/5 rounded-xl"></div>
           )}
           <div className="relative z-10">
-          {/* 庄家手牌 */}
-          <Hand
-            cards={dealerHand}
-            title={getTranslation('dealerCards', language)}
-            isHidden={gamePhase !== 'game-over'}
-            language={language}
-            handEvaluation={dealerEvaluation}
-            showEvaluation={gamePhase === 'game-over'}
-            isDarkMode={isDarkMode}
-            animatingCards={animationState.isDealerReplacing ? animationState.replacingCards : []}
-            isDealing={animationState.isDealing && animationState.dealingIndex >= 5}
-          />
+            {/* 庄家手牌 */}
+            <Hand
+              cards={dealerHand}
+              title={getTranslation('dealerCards', language)}
+              isHidden={gamePhase !== 'game-over'}
+              language={language}
+              handEvaluation={dealerEvaluation}
+              showEvaluation={gamePhase === 'game-over'}
+              isDarkMode={isDarkMode}
+              animatingCards={animationState.isDealerReplacing ? animationState.replacingCards : []}
+              isDealing={animationState.isDealing && animationState.dealingIndex >= 5}
+            />
 
-          {/* 游戏状态显示 */}
-          <div className="text-center py-2 sm:py-4">
-            {gamePhase === 'dealing' && (
-              <div className={`font-medium text-sm sm:text-base flex items-center justify-center gap-2 ${
-                isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400' : 'text-green-600'
-              }`}>
-                <div className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent"></div>
-                {getTranslation('dealing', language)}
-              </div>
-            )}
-            {gamePhase === 'player-replace' && (
-              <div className="space-y-2">
-                <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-                <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}`}>
-                  {selectedCards.length > 0 
-                    ? getTranslation('replaceHint', language)
-                    : getTranslation('continueHint', language)
+            {/* 游戏状态显示 */}
+            <div className="text-center py-2 sm:py-4">
+              {gamePhase === 'dealing' && (
+                <div className={`font-medium text-sm sm:text-base flex items-center justify-center gap-2 ${
+                  isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400' : 'text-green-600'
+                }`}>
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent"></div>
+                  {getTranslation('dealing', language)}
+                </div>
+              )}
+              {gamePhase === 'player-replace' && (
+                <div className="space-y-2">
+                  <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}`}>
+                    {selectedCards.length > 0 
+                      ? getTranslation('replaceHint', language)
+                      : getTranslation('continueHint', language)
+                    }
+                  </div>
+                  {selectedCards.length > 0 && (
+                    <div className={`text-xs sm:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                      {getTranslation('selectedCards', language)}: {selectedCards.length}/3
+                    </div>
+                  )}
+                  {animationState.isPlayerReplacing && (
+                    <div className={`text-xs sm:text-sm flex items-center justify-center gap-2 ${
+                      isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400' : 'text-yellow-600'
+                    }`}>
+                      <div className="animate-spin rounded-full h-3 w-3 border-2 border-current border-t-transparent"></div>
+                      {getTranslation('playerReplacing', language)}
+                    </div>
+                  )}
+                </div>
+              )}
+              {gamePhase === 'dealer-replace' && (
+                <div className={`font-medium text-sm sm:text-base flex items-center justify-center gap-2 ${
+                  isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400' : 'text-orange-600'
+                }`}>
+                  <RotateCcw className="animate-spin" size={14} />
+                  {getTranslation('dealerReplacing', language)}
+                </div>
+              )}
+              {gamePhase === 'revealing' && (
+                <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400' : 'text-purple-600'}`}>
+                  {getTranslation('comparing', language)}
+                </div>
+              )}
+              {gamePhase === 'game-over' && (
+                <div className="space-y-2">
+                  <div className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+                    {getTranslation('result', language)}: <span className={isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
+                  </div>
+                  <div className={`text-sm sm:text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {getTranslation('player', language)}{getTranslation('dealerReplaced', language)}: {playerReplacedCount} {getTranslation('cards', language)} | {getTranslation('dealer', language)}{getTranslation('dealerReplaced', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 玩家手牌 */}
+            <Hand
+              cards={playerHand}
+              title={getTranslation('yourCards', language)}
+              selectedCards={selectedCards}
+              onCardClick={gamePhase === 'player-replace' ? handleCardClick : undefined}
+              language={language}
+              handEvaluation={playerEvaluation}
+              showEvaluation={gamePhase === 'game-over'}
+              isDarkMode={isDarkMode}
+              animatingCards={animationState.isPlayerReplacing ? animationState.replacingCards : []}
+              isDealing={animationState.isDealing && animationState.dealingIndex < 5}
+            />
+
+            {/* 操作按钮 */}
+            <div className="text-center">
+              {gamePhase === 'player-replace' && (
+                <button
+                  onClick={replacePlayerCards}
+                  className={`font-bold py-2 px-4 sm:py-3 sm:px-8 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg flex items-center gap-2 mx-auto text-sm sm:text-base ${
+                    isDarkMode
+                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-500 hover:to-cyan-500 shadow-lg shadow-blue-500/25'
+                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  }`}
+                >
+                  <RotateCcw size={16} className="sm:w-5 sm:h-5" />
+                  {selectedCards.length === 0 
+                    ? getTranslation('continue', language)
+                    : `${getTranslation('replaceCards', language)} (${selectedCards.length})`
                   }
-                </div>
-                {selectedCards.length > 0 && (
-                  <div className={`text-xs sm:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                    {getTranslation('selectedCards', language)}: {selectedCards.length}/3
-                  </div>
-                )}
-                {animationState.isPlayerReplacing && (
-                  <div className={`text-xs sm:text-sm flex items-center justify-center gap-2 ${
-                    isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400' : 'text-yellow-600'
-                  }`}>
-                    <div className="animate-spin rounded-full h-3 w-3 border-2 border-current border-t-transparent"></div>
-                    {getTranslation('playerReplacing', language)}
-                  </div>
-                )}
-              </div>
-            )}
-            {gamePhase === 'dealer-replace' && (
-              <div className={`font-medium text-sm sm:text-base flex items-center justify-center gap-2 ${
-                isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400' : 'text-orange-600'
-              }`}>
-                <RotateCcw className="animate-spin" size={14} />
-                {getTranslation('dealerReplacing', language)}
-              </div>
-            )}
-            {gamePhase === 'revealing' && (
-              <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`}>
-              <div className={`font-medium text-sm sm:text-base ${isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400' : 'text-purple-600'}`}>
-                {getTranslation('comparing', language)}
-              </div>
-            )}
-            {gamePhase === 'game-over' && (
-              <div className="space-y-2">
-                <div className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                <div className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
-                  {getTranslation('result', language)}: <span className={isDarkMode ? 'text-blue-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
-                  {getTranslation('result', language)}: <span className={isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400' : 'text-blue-600'}>{getTranslation(gameResult, language)}</span>
-                </div>
-                <div className={`text-sm sm:text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {getTranslation('player', language)}{getTranslation('dealerReplaced', language)}: {playerReplacedCount} {getTranslation('cards', language)} | {getTranslation('dealer', language)}{getTranslation('dealerReplaced', language)}: {dealerReplacedCount} {getTranslation('cards', language)}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* 玩家手牌 */}
-          <Hand
-            cards={playerHand}
-            title={getTranslation('yourCards', language)}
-            selectedCards={selectedCards}
-            onCardClick={gamePhase === 'player-replace' ? handleCardClick : undefined}
-            language={language}
-            handEvaluation={playerEvaluation}
-            showEvaluation={gamePhase === 'game-over'}
-            isDarkMode={isDarkMode}
-            animatingCards={animationState.isPlayerReplacing ? animationState.replacingCards : []}
-            isDealing={animationState.isDealing && animationState.dealingIndex < 5}
-          />
-
-          {/* 操作按钮 */}
-          <div className="text-center">
-            {gamePhase === 'player-replace' && (
-              <button
-                onClick={replacePlayerCards}
-                className={`font-bold py-2 px-4 sm:py-3 sm:px-8 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg flex items-center gap-2 mx-auto text-sm sm:text-base ${
-                  isDarkMode
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-500 hover:to-cyan-500 shadow-lg shadow-blue-500/25'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
-                }`}
-              >
-                <RotateCcw size={16} className="sm:w-5 sm:h-5" />
-                {selectedCards.length === 0 
-                  ? getTranslation('continue', language)
-                  : `${getTranslation('replaceCards', language)} (${selectedCards.length})`
-                }
-              </button>
-            )}
-            {gamePhase === 'game-over' && (
-              <button
-                onClick={startNewGame}
-                className={`font-bold py-2 px-4 sm:py-3 sm:px-8 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg flex items-center gap-2 mx-auto text-sm sm:text-base ${
-                  isDarkMode
-                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-500 shadow-lg shadow-green-500/25'
-                    : 'bg-green-600 hover:bg-green-700 text-white'
-                }`}
-              >
-                <Play size={16} className="sm:w-5 sm:h-5" />
-                {language === 'zh' ? '再玩一局' : 'Play Again'}
-              </button>
-            )}
-          </div>
+                </button>
+              )}
+              {gamePhase === 'game-over' && (
+                <button
+                  onClick={startNewGame}
+                  className={`font-bold py-2 px-4 sm:py-3 sm:px-8 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg flex items-center gap-2 mx-auto text-sm sm:text-base ${
+                    isDarkMode
+                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-500 shadow-lg shadow-green-500/25'
+                      : 'bg-green-600 hover:bg-green-700 text-white'
+                  }`}
+                >
+                  <Play size={16} className="sm:w-5 sm:h-5" />
+                  {language === 'zh' ? '再玩一局' : 'Play Again'}
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -670,25 +667,25 @@ export const Game: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-cyan-500/5 rounded-lg"></div>
           )}
           <div className="relative z-10">
-          <h3 className={`text-base sm:text-lg font-bold mb-3 text-center ${
-            isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400' : 'text-orange-600'
-          }`}>
-            📋 {getTranslation('gameRules', language)}
-          </h3>
-          <div className={`text-xs sm:text-sm space-y-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-            <p className="text-center font-medium">
-              {language === 'zh' 
-                ? '🎯 操作说明：点击牌面选择要换的牌（最多3张），然后点击换牌按钮开始对战' 
-                : '🎯 How to play: Click cards to select for replacement (max 3), then click replace button to start'
-              }
-            </p>
-            <p className="text-center">
-              {language === 'zh' 
-                ? '🏆 牌型从大到小：同花顺 > 四条 > 葫芦 > 同花 > 顺子 > 三条 > 两对 > 一对 > 散牌' 
-                : '🏆 Hand rankings: Straight Flush > Four of a Kind > Full House > Flush > Straight > Three of a Kind > Two Pairs > One Pair > High Card'
-              }
-            </p>
-          </div>
+            <h3 className={`text-base sm:text-lg font-bold mb-3 text-center ${
+              isDarkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400' : 'text-orange-600'
+            }`}>
+              📋 {getTranslation('gameRules', language)}
+            </h3>
+            <div className={`text-xs sm:text-sm space-y-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              <p className="text-center font-medium">
+                {language === 'zh' 
+                  ? '🎯 操作说明：点击牌面选择要换的牌（最多3张），然后点击换牌按钮开始对战' 
+                  : '🎯 How to play: Click cards to select for replacement (max 3), then click replace button to start'
+                }
+              </p>
+              <p className="text-center">
+                {language === 'zh' 
+                  ? '🏆 牌型从大到小：同花顺 > 四条 > 葫芦 > 同花 > 顺子 > 三条 > 两对 > 一对 > 散牌' 
+                  : '🏆 Hand rankings: Straight Flush > Four of a Kind > Full House > Flush > Straight > Three of a Kind > Two Pairs > One Pair > High Card'
+                }
+              </p>
+            </div>
           </div>
         </div>
       </div>
