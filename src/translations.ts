@@ -2,7 +2,7 @@ import { Language, HandType } from './types';
 
 export const translations = {
   zh: {
-    title: '赌神-梭哈',
+    title: '人机对战-梭哈',
     player: '玩家',
     dealer: '庄家',
     yourCards: '您的手牌',
