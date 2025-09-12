@@ -28,7 +28,7 @@ export const Game: React.FC = () => {
   
   const { playSound, toggleSound, isSoundEnabled } = useSound();
   const [language, setLanguage] = useState<Language>(getSystemLanguage());
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(isSoundEnabled());
   const [deck, setDeck] = useState<Card[]>([]);
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
